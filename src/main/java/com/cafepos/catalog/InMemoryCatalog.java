@@ -1,6 +1,5 @@
 package com.cafepos.catalog;
 
-import com.cafepos.domain.Product;
 import java.util.*;
 
 public final class InMemoryCatalog implements Catalog {

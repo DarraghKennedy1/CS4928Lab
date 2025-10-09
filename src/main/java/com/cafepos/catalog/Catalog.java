@@ -1,6 +1,5 @@
 package com.cafepos.catalog;
 
-import com.cafepos.domain.Product;
 import java.util.Optional;
 
 public interface Catalog {

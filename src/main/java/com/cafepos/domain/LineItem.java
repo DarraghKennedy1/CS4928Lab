@@ -1,5 +1,6 @@
 package com.cafepos.domain;
 
+import com.cafepos.catalog.Product;
 import com.cafepos.common.Money;
 
 public final class LineItem {
