@@ -1,6 +1,6 @@
 package com.cafepos.catalog;
 import com.cafepos.common.Money;
-public abstract class ProductDecorator implements Product {
+public abstract class ProductDecorator implements Product, Priced {
     protected final Product base;
     protected ProductDecorator(Product base) {
         if (base == null) throw new
