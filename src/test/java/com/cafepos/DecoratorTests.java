@@ -50,4 +50,14 @@ public class DecoratorTests {
         
         assertEquals(Money.of(6.60), o.subtotal());
     }
+
+    @Test
+    void factory_parses_recipe() {
+        com.cafepos.factory.ProductFactory f = new com.cafepos.factory.ProductFactory();
+        Product p = f.create("ESP+SHOT+OAT");
+        assertTrue(p.name().contains("Espresso"));
+        assertTrue(p.name().contains("Extra Shot"));
+        assertTrue(p.name().contains("Oat Milk"));
+        assertEquals(Money.of(3.80), ((Priced) p).price());
+    }
 }

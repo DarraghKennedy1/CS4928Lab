@@ -1,0 +1,21 @@
+Reflection and Deliverables
+Finally, reflect briefly on the design. Explain why you chose your pricing interface, identify
+one place where you preserved the Open/Closed Principle, and describe what would be
+required to add a new add-on next week. If you added any new tokens to the factory during
+experimentation, explain how your change preserved the Open/Closed Principle.
+
+---
+Reflection Answers
+
+Pricing interface choice:
+I introduced a small `Priced` interface with a single `price()` method implemented by `SimpleProduct` and all decorators. This keeps order math simple (`LineItem` can always ask for a unit price when available) and avoids instanceof chains across specific decorator types. It also lets future pricing sources (e.g., promotions) plug in without changing order code.
+
+Open/Closed Principle (OCP):
+OCP is preserved in how new add‑ons are introduced: adding a new decorator is done by creating a new class that extends `ProductDecorator` and implements `Priced`. Existing code such as `Order`, `LineItem`, and existing decorators do not need to change; they treat the new decorator as just another `Product`/`Priced` implementation.
+
+Adding a new add‑on next week:
+- Create a new decorator class (e.g., `AlmondMilk`) extending `ProductDecorator`, implement `name()` and `price()` by adding its surcharge.
+- Add its token handling in `ProductFactory` so recipes can construct it (e.g., `ALM`). The rest of the system (orders, totals, tests) works unchanged.
+
+Factory tokens and OCP:
+In the current factory, adding a token requires adding a small `switch` case. While this is a minimal, isolated edit, an alternative registry-based factory (map of token → constructor) would allow registering tokens without modifying the factory class, further improving OCP. Either approach keeps OCP for the broader application: callers only use recipe strings and do not change when new add‑ons are introduced.
