@@ -14,11 +14,14 @@ public final class Money implements Comparable<Money> {
         return new Money(BigDecimal.ZERO);
     }
 
+    // Added for Week 6 smelly code compatibility
+    public static Money of(BigDecimal value) {
+        if (value == null) throw new IllegalArgumentException("amount required");
+        return new Money(value);
+    }
+
     private Money(BigDecimal a) {
         if (a == null) throw new IllegalArgumentException("amount required");
-        if (a.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("amount must not be negative");
-        }
         this.amount = a.setScale(2, RoundingMode.HALF_UP);
     }
 
@@ -28,7 +31,6 @@ public final class Money implements Comparable<Money> {
     }
 
     public Money multiply(int qty) {
-        if (qty < 0) throw new IllegalArgumentException("quantity must not be negative");
         return new Money(this.amount.multiply(BigDecimal.valueOf(qty)));
     }
 
@@ -48,6 +50,11 @@ public final class Money implements Comparable<Money> {
     @Override
     public String toString() {
         return String.format("%.2f", amount);
+    }
+
+    // Added for Week 6 smelly code compatibility
+    public BigDecimal asBigDecimal() {
+        return amount;
     }
 
     @Override

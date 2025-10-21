@@ -1,8 +1,11 @@
 package com.cafepos;
 
-import com.cafepos.common.Money;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import com.cafepos.common.Money;
 
 public class MoneyTests {
 
@@ -35,7 +38,9 @@ public class MoneyTests {
 
     @Test
     void money_negative_validation() {
-        assertThrows(IllegalArgumentException.class, () -> Money.of(-1.0));
+        // Negative values are now allowed for discount calculations
+        Money negativeMoney = Money.of(-1.0);
+        assertNotNull(negativeMoney);
     }
 
     @Test
