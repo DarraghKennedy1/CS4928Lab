@@ -22,9 +22,6 @@ public final class Money implements Comparable<Money> {
 
     private Money(BigDecimal a) {
         if (a == null) throw new IllegalArgumentException("amount required");
-        if (a.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("amount must not be negative");
-        }
         this.amount = a.setScale(2, RoundingMode.HALF_UP);
     }
 
@@ -34,7 +31,6 @@ public final class Money implements Comparable<Money> {
     }
 
     public Money multiply(int qty) {
-        if (qty < 0) throw new IllegalArgumentException("quantity must not be negative");
         return new Money(this.amount.multiply(BigDecimal.valueOf(qty)));
     }
 
