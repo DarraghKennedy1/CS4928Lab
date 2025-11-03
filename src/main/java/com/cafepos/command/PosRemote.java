@@ -20,6 +20,10 @@ public final class PosRemote {
         slots[slot] = command == null ? (() -> {}) : command;
     }
 
+    public void setSlot(int slot, Command command) {
+        setButton(slot, command);
+    }
+
     public void press(int slot) {
         if (slot < 0 || slot >= slots.length) return;
         Command c = slots[slot];
@@ -31,6 +35,10 @@ public final class PosRemote {
         if (history.isEmpty()) return;
         Command last = history.pop();
         last.undo();
+    }
+
+    public void undo() {
+        undoLast();
     }
 }
 
