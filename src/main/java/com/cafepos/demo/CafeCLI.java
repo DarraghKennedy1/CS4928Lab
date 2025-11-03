@@ -11,7 +11,7 @@ import com.cafepos.payment.CardPayment;
 import com.cafepos.payment.CashPayment;
 import com.cafepos.payment.PaymentStrategy;
 import com.cafepos.payment.WalletPayment;
-import com.cafepos.payment.Revolut;
+ 
 
 public final class CafeCLI {
 
@@ -62,7 +62,6 @@ public final class CafeCLI {
         System.out.println("1. Cash");
         System.out.println("2. Card");
         System.out.println("3. Wallet");
-        System.out.println("4.Revolut");
         
         PaymentStrategy payment = null;
         while (payment == null) {
@@ -91,17 +90,8 @@ public final class CafeCLI {
                         System.out.println("⚠️ Wallet ID cannot be empty. Please try again.");
                     }
                     break;
-                case "4":
-                    System.out.print("Enter rev number: ");
-                    String revNumber = sc.nextLine().trim();
-                    if (!revNumber.isEmpty()) {
-                        payment = new Revolut(revNumber);
-                    } else {
-                        System.out.println("⚠️ Card number cannot be empty. Please try again.");
-                    }
-                    break;
                 default:
-                    System.out.println("⚠️ Invalid choice. Please select 1, 2, 3, 4.");
+                    System.out.println("⚠️ Invalid choice. Please select 1, 2, or 3.");
             }
         }
         
