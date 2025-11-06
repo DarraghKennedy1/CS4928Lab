@@ -19,3 +19,23 @@ Adding a new add‑on next week:
 
 Factory tokens and OCP:
 In the current factory, adding a token requires adding a small `switch` case. While this is a minimal, isolated edit, an alternative registry-based factory (map of token → constructor) would allow registering tokens without modifying the factory class, further improving OCP. Either approach keeps OCP for the broader application: callers only use recipe strings and do not change when new add‑ons are introduced.
+
+---
+
+Week 9 Reflection: Composite + Iterator + State
+
+Safety vs. Transparency in Composite API:
+We chose safety over transparency in the Composite API by having `MenuComponent` throw `UnsupportedOperationException` for operations that don't apply to a particular node type. For example:
+- `MenuItem` (leaf) throws exceptions when you try to call `add()`, `remove()`, or `getChild()` 
+- `Menu` (composite) throws exceptions when you try to call `price()` (a leaf-only operation)
+
+This is safer than a transparent design where all operations exist but do nothing (or return null/defaults), because it fails fast and makes misuse immediately obvious. If we had transparency (e.g., `MenuItem.add()` silently doing nothing), bugs could hide longer. The trade-off is that clients must use `instanceof` checks or catch exceptions, but this explicit error handling is preferable to silent failures.
+
+State Pattern Benefits:
+The State pattern makes several behaviors much easier than conditionals:
+1. **Adding new states**: With conditionals, you'd need to update every if/else chain across multiple methods. With State, you just add a new state class implementing the interface—no changes to existing states or the FSM context.
+2. **Complex transition rules**: Each state encapsulates its own transition logic. For example, `ReadyState` knows it can't be cancelled, and `DeliveredState` knows all operations are terminal. With conditionals, this logic would be scattered across multiple methods with nested conditions.
+3. **State-specific behavior**: Each state can have different side effects (logging, notifications, etc.) without polluting the main Order class. The `NewState.pay()` can do different setup than `PreparingState.pay()`, all encapsulated in one place.
+4. **Testing**: Each state can be tested independently. With conditionals, you'd need to test all combinations of state + action, which grows combinatorially.
+
+The State pattern essentially replaces a large switch/if-else structure with polymorphic dispatch, making the code more maintainable and extensible.
