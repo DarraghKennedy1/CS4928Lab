@@ -52,8 +52,11 @@ public class MenuTests {
         
         List<MenuComponent> all = root.allItems();
         
-        assertEquals(1, all.size());
-        assertEquals("Espresso", all.get(0).name());
+        // Iterator returns all nodes (Menus + MenuItems) in depth-first order
+        assertEquals(3, all.size()); // Drinks, Coffee, Espresso
+        assertEquals("Drinks", all.get(0).name());
+        assertEquals("Coffee", all.get(1).name());
+        assertEquals("Espresso", all.get(2).name());
     }
     
     @Test
