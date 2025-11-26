@@ -1,0 +1,40 @@
+package com.cafepos.ui;
+
+import com.cafepos.app.CheckoutService;
+import com.cafepos.domain.LineItem;
+import com.cafepos.domain.Order;
+import com.cafepos.domain.OrderRepository;
+import com.cafepos.factory.ProductFactory;
+
+/**
+ * Controller in MVC pattern.
+ * Translates user actions into application service calls.
+ * Does NOT do formatting or printing.
+ */
+public final class OrderController {
+    private final OrderRepository repo;
+    private final CheckoutService checkout;
+    private final ProductFactory factory = new ProductFactory();
+
+    public OrderController(OrderRepository repo, CheckoutService checkout) {
+        this.repo = repo;
+        this.checkout = checkout;
+    }
+
+    public long createOrder(long id) {
+        repo.save(new Order(id));
+        return id;
+    }
+
+    public void addItem(long orderId, String recipe, int qty) {
+        Order order = repo.findById(orderId).orElseThrow(
+            () -> new IllegalArgumentException("Order not found: " + orderId)
+        );
+        order.addItem(new LineItem(factory.create(recipe), qty));
+        repo.save(order);
+    }
+
+    public String checkout(long orderId, int taxPercent) {
+        return checkout.checkout(orderId, taxPercent);
+    }
+}
