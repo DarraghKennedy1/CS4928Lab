@@ -138,3 +138,5 @@ mvn test
 - SOLID: SRP (each class has one reason to change), OCP (add policies without modifying callers), LSP (policies interchangeable), ISP (small focused interfaces), DIP (OrderManager depends on abstractions).
 - To add a new discount: implement `DiscountPolicy` (e.g., `HappyHourDiscount`) and register/select it in a factory/composition root—no changes to `OrderManager` or existing policies required.
 
+## Video Link
+https://ulcampus-my.sharepoint.com/:v:/r/personal/22349677_studentmail_ul_ie/Documents/Full%20Abdul%20Project%20(Submit).mp4?csf=1&web=1&e=svAkFv&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
